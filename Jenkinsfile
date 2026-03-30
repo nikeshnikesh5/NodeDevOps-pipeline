@@ -8,11 +8,11 @@ pipeline {
 
   stages {
 
-    stage('Clone Code') {
-      steps {
-        git 'https://github.com/yourusername/simple-node.git'
-      }
-    }
+        stage('Clone Code') {
+            steps {
+                git url: 'https://github.com/nikeshnikesh5/NodeDevOps-pipeline.git', branch: 'main'
+            }
+        }
 
     stage('Build Docker Image') {
       steps {
@@ -53,4 +53,5 @@ pipeline {
       echo '❌ Pipeline Failed!'
     }
   }
-}
+  develop
+  main
