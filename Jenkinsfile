@@ -1,24 +1,56 @@
 pipeline {
   agent any
 
+  environment {
+    IMAGE_NAME = "techhunt/node-moni"
+    TAG = "latest"
+  }
+
   stages {
-    stage('Build') {
+
+    stage('Clone Code') {
       steps {
-        sh 'docker build -t simple-node .'
+        git 'https://github.com/yourusername/simple-node.git'
       }
     }
 
-    stage('Push') {
+    stage('Build Docker Image') {
       steps {
-        sh 'docker tag simple-node your-dockerhub/simple-node:latest'
-        sh 'docker push your-dockerhub/simple-node:latest'
+        sh 'docker build -t $IMAGE_NAME:$TAG .'
       }
     }
 
-    stage('Deploy') {
+    stage('Login to Docker Hub') {
+      steps {
+        withCredentials([usernamePassword(
+          credentialsId: 'docker-cred',
+          usernameVariable: 'DOCKER_USER',
+          passwordVariable: 'DOCKER_PASS'
+        )]) {
+          sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+        }
+      }
+    }
+
+    stage('Push Image') {
+      steps {
+        sh 'docker push $IMAGE_NAME:$TAG'
+      }
+    }
+
+    stage('Deploy to Kubernetes') {
       steps {
         sh 'kubectl apply -f k8s/'
       }
+    }
+  }
+
+  post {
+    success {
+      echo '✅ Deployment Successful!'
+    }
+    failure {
+      echo '❌ Pipeline Failed!'
     }
   }
 }
