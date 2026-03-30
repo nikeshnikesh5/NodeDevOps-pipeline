@@ -10,8 +10,8 @@ pipeline {
 
     stage('Push') {
       steps {
-        sh 'docker tag simple-node your-dockerhub/simple-node:latest'
-        sh 'docker push your-dockerhub/simple-node:latest'
+        sh 'docker tag simple-node techhunt/simple-node:latest'
+        sh 'docker push techhunt/simple-node:latest'
       }
     }
 
