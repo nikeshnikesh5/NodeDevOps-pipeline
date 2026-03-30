@@ -11,7 +11,7 @@ pipeline {
   
       stage('Clone Code') {
   steps {
-    git branch: 'main', url: 'https://github.com/yourusername/simple-node.git'
+    git branch: 'develop', url: 'https://github.com/yourusername/simple-node.git'
   
 }
     }
