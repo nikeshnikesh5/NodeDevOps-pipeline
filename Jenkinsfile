@@ -10,7 +10,7 @@ pipeline {
 
     stage('Clone Code') {
       steps {
-        git 'https://github.com/yourusername/simple-node.git'
+        git 'https://github.com/nikeshnikesh5/NodeDevOps-pipeline.git'
       }
     }
 
