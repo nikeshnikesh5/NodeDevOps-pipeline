@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: node-app
-        image: tech-hunt/simple-node:latest
+        image: techhunt/node-moni
         ports:
         - containerPort: 3000
